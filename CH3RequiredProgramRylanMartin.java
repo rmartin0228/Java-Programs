@@ -1,4 +1,11 @@
 /*
+Rylan Martin - 02.17.2020 - CH3 Required Program
+
+This program calculates and prints a bill for a cellular phone company (Java Mobile).
+The user is prompted for their last name, account number, service code, and number
+of minutes used. There are two types of service, Regular and Premium. The receipt 
+prints out the information that was given by the user, as well as the total cost 
+for the bill.
 */
 
 package ch3.required.program.rylan.martin;
@@ -33,12 +40,19 @@ public class CH3RequiredProgramRylanMartin {
         //AM VARIABLES
         int amMinutes; //AM Minutes
         final double amAddedCost = 0.10; //Added cost for minutes past 100
-        double amCost; //Cost for AM Minutes
+        double amCost = 0; //Cost for AM Minutes
 
         //PM VARIABLES
         int pmMinutes; //PM Minutes
         final double pmAddedCost = 0.05; //Added cost for minutes past 200
-        double pmCost; //Cost for PM Minutes
+        double pmCost = 0; //Cost for PM Minutes
+        
+        //Description of code for user
+        System.out.println("This program calculates and prints a bill for a cellular phone company (Java Mobile).\n" +
+                           "The user is prompted for their last name, account number, service code, and number\n" +
+                           "of minutes used. There are two types of service, Regular and Premium. The receipt \n" +
+                           "prints out the information that was given by the user, as well as the total cost \n" +
+                           "for the bill.");
 
         //Prompt user for their last last name, then store the input in lastName
         System.out.print("Welcome to Java Mobile! What is your last name?: ");
@@ -69,12 +83,12 @@ public class CH3RequiredProgramRylanMartin {
           if (regularMinutes > 60) {
             //Add regularAddedCost to regularCost to get regularFinalCost
             regularFinalCost = regularCost + (regularMinutes * regularAddedCost);
-            System.out.printf("%5.2f\n", regularFinalCost);
+            System.out.printf("$%5.2f\n", regularFinalCost);
           }
           else {
             //Print out regularFinalCost without regularAddedCost
             regularFinalCost = regularCost;
-            System.out.printf("%5.2f\n", regularFinalCost);
+            System.out.printf("$%5.2f\n", regularFinalCost);
           }
         }
 
@@ -93,6 +107,8 @@ public class CH3RequiredProgramRylanMartin {
             //Charge $0.05 per minute for any amount of PM Minutes past 200 Minutes
             pmCost = pmMinutes * pmAddedCost;
           }
+          premiumFinalCost = premiumCost + amCost + pmCost;
+          System.out.printf("$%5.2f\n", premiumFinalCost);
         }
         break;
       } 
