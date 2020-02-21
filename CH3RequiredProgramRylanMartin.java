@@ -68,46 +68,47 @@ public class CH3RequiredProgramRylanMartin {
         System.out.print("Which type of service? (R/r)egular or (P/p)remium?: ");
         serviceCode = input.next().charAt(0);
 
+
         while ((serviceCode != 'R') && (serviceCode != 'r') && (serviceCode != 'P') && (serviceCode != 'p')) {
           //Ask the user again for their Service Code until it is a correct character
           System.out.print("The character you entered is not valid. Please try again. (R/r)egular or (P/p)remium?: ");
           serviceCode = input.next().charAt(0);
+        }
   
-            //Run calculations for a bill based on the type of service the user has
-            if ((serviceCode == 'R') || (serviceCode == 'r')) {
-                //Ask for amount of Minutes that have been used and assign value to regularMinutes
-                System.out.print("How many Minutes have you used?: ");
-                regularMinutes = input.nextInt();
-            if (regularMinutes > 60) {
-                //Add regularAddedCost to regularCost to get regularFinalCost
-                regularFinalCost = regularCost + (regularMinutes * regularAddedCost);
-                System.out.printf("$%5.2f\n", regularFinalCost);
-            }
-            else {
-                //Print out regularFinalCost without regularAddedCost
-                regularFinalCost = regularCost;
-                System.out.printf("$%5.2f\n", regularFinalCost);
-            }
+        //Run calculations for a bill based on the type of service the user has
+        if ((serviceCode == 'R') || (serviceCode == 'r')) {
+          //Ask for amount of Minutes that have been used and assign value to regularMinutes
+          System.out.print("How many Minutes have you used?: ");
+          regularMinutes = input.nextInt();
+          if (regularMinutes > 60) {
+            //Add regularAddedCost to regularCost to get regularFinalCost
+            regularFinalCost = regularCost + (regularMinutes * regularAddedCost);
+            System.out.printf("$%5.2f\n", regularFinalCost);
+          }
+          else {
+            //Print out regularFinalCost without regularAddedCost
+            regularFinalCost = regularCost;
+            System.out.printf("$%5.2f\n", regularFinalCost);
+          }
         }
 
-            if ((serviceCode == 'P') || (serviceCode == 'p')) {
-                //Ask for amount of AM Minutes that have been used and assign value to amMinutes
-                System.out.print("How many AM Minutes have you used?: ");
-                amMinutes = input.nextInt();
-            if (amMinutes > 100) {
-                //Charge $0.10 per minute for any amount of AM Minutes past 100 Minutes
-                amCost = amMinutes * amAddedCost;
-            }
-            //Ask for amount of PM Minutes that have been used and assign value to pmMinutes
-            System.out.print("How many PM Minutes have you used?: ");
-            pmMinutes = input.nextInt();
-            if (pmMinutes > 200) {
-                //Charge $0.05 per minute for any amount of PM Minutes past 200 Minutes
-                pmCost = pmMinutes * pmAddedCost;
-            }
-            premiumFinalCost = premiumCost + amCost + pmCost;
-            System.out.printf("$%5.2f\n", premiumFinalCost);
+        else if ((serviceCode == 'P') || (serviceCode == 'p')) {
+          //Ask for amount of AM Minutes that have been used and assign value to amMinutes
+          System.out.print("How many AM Minutes have you used?: ");
+          amMinutes = input.nextInt();
+          if (amMinutes > 100) {
+            //Charge $0.10 per minute for any amount of AM Minutes past 100 Minutes
+            amCost = amMinutes * amAddedCost;
+          }
+          //Ask for amount of PM Minutes that have been used and assign value to pmMinutes
+          System.out.print("How many PM Minutes have you used?: ");
+          pmMinutes = input.nextInt();
+          if (pmMinutes > 200) {
+            //Charge $0.05 per minute for any amount of PM Minutes past 200 Minutes
+            pmCost = pmMinutes * pmAddedCost;
+          }
+          premiumFinalCost = premiumCost + amCost + pmCost;
+          System.out.printf("$%5.2f\n", premiumFinalCost);
         }
-      } 
-  }
+    } 
 }
