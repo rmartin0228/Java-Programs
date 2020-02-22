@@ -29,23 +29,32 @@ public class CH3RequiredProgramRylanMartin {
 
         //'PREMIUM' VARIABLES
         final double premiumCost = 30.00; //Per month
-        double premiumFinalCost; //Final cost for premium users
-
+        double premiumFinalCost; //Final cost for premium user
+        
         //'REGULAR' VARIABLES
         final double regularCost = 15.00; //Per month
         int regularMinutes; //Regular Minutes
         final double regularAddedCost = 0.20; //Added cost for minutes past 60
         double regularFinalCost; //Final cost for regular users
+        int regularMinutesDifference; //The amount of minutes that are past the free limit
+        double regularMinutesDifferenceCost = 0.0; //Cost of minutes after free limit
 
         //AM VARIABLES
         int amMinutes; //AM Minutes
         final double amAddedCost = 0.10; //Added cost for minutes past 100
         double amCost = 0; //Cost for AM Minutes
+        double amFinalCost; //Final cost for AM Minutes
+        int amMinutesDifference; //Variable for amount of minutes that are past AM free limit
+        double amMinutesDifferenceCost = 0; //Cost of minutes after free limit
+        
 
         //PM VARIABLES
         int pmMinutes; //PM Minutes
         final double pmAddedCost = 0.05; //Added cost for minutes past 200
         double pmCost = 0; //Cost for PM Minutes
+        double pmFinalCost; //Final cost for PM Minutes
+        int pmMinutesDifference; //Variable for amount of minutes past free limit
+        double pmMinutesDifferenceCost = 0; //Cost of minutes after free limit
         
         //Description of code for user
         System.out.println("This program calculates and prints a bill for a cellular phone company (Java Mobile).\n" +
@@ -71,7 +80,8 @@ public class CH3RequiredProgramRylanMartin {
 
         while ((serviceCode != 'R') && (serviceCode != 'r') && (serviceCode != 'P') && (serviceCode != 'p')) {
           //Ask the user again for their Service Code until it is a correct character
-          System.out.print("The character you entered is not valid. Please try again. (R/r)egular or (P/p)remium?: ");
+          System.out.print("The character you entered is not valid. Please try a"
+                  + "gain. (R/r)egular or (P/p)remium?: ");
           serviceCode = input.next().charAt(0);
         }
   
@@ -81,34 +91,81 @@ public class CH3RequiredProgramRylanMartin {
           System.out.print("How many Minutes have you used?: ");
           regularMinutes = input.nextInt();
           if (regularMinutes > 60) {
-            //Add regularAddedCost to regularCost to get regularFinalCost
-            regularFinalCost = regularCost + (regularMinutes * regularAddedCost);
-            System.out.printf("$%5.2f\n", regularFinalCost);
+            //Find Difference
+            regularMinutesDifference = regularMinutes - 60;
+            //Find cost of difference
+            regularMinutesDifferenceCost = regularMinutesDifference * regularAddedCost; 
+            //Add regularMinutesDifferenceCost to regularCost to get regularFinalCost
+            regularFinalCost = regularCost + regularMinutesDifferenceCost;
+            System.out.printf("\n\nTELEPHONE BILL FOR %s         ACCOUNT NBR: %d    "
+                    + "     TYPE OF SERVICE: %c\n", lastName, accountNumber, serviceCode);
+            System.out.printf("Number of Minutes used: %d    Cost per minute: $%"
+                    + ".2f    Charges: %d * $%.2f\n",regularMinutes,regularAddedCost,regularMinutesDifference,regularMinutesDifferenceCost);
+            System.out.println("                                                "
+                    + "            ______________\n");
+            System.out.printf("                                           Total "
+                    + "Charges:           $%.2f\n", regularFinalCost);
           }
           else {
             //Print out regularFinalCost without regularAddedCost
             regularFinalCost = regularCost;
-            System.out.printf("$%5.2f\n", regularFinalCost);
+            System.out.printf("\n\nTELEPHONE BILL FOR %s         ACCOUNT NBR: %d    "
+                    + "     TYPE OF SERVICE: %c\n", lastName, accountNumber, serviceCode);
+            System.out.printf("Number of Minutes used: %d      Cost per minute: "
+                    + "$%.2f       Charges: %d * $%.2f\n", regularMinutes, regularAddedCost, regularMinutes, regularMinutesDifferenceCost);
+            System.out.println("                                                "
+                    + "                  ______________\n");
+            System.out.printf("                                                      "
+                    + "Total Charges:      $%.2f\n", regularFinalCost);
           }
         }
 
-        else if ((serviceCode == 'P') || (serviceCode == 'p')) {
+        if ((serviceCode == 'P') || (serviceCode == 'p')) {
           //Ask for amount of AM Minutes that have been used and assign value to amMinutes
           System.out.print("How many AM Minutes have you used?: ");
           amMinutes = input.nextInt();
           if (amMinutes > 100) {
-            //Charge $0.10 per minute for any amount of AM Minutes past 100 Minutes
-            amCost = amMinutes * amAddedCost;
+            //Find the difference
+            amMinutesDifference = amMinutes - 100;
+            //Find Cost of Difference
+            amMinutesDifferenceCost = amMinutesDifference * amAddedCost;
+            //Add amMinutesDifferenceCost to amCost to get amFinalCost
+            amFinalCost = amCost + amMinutesDifferenceCost;
           }
+          else {
+            //amFinalCost without minute difference
+            amFinalCost = amCost;
+          }
+          
           //Ask for amount of PM Minutes that have been used and assign value to pmMinutes
           System.out.print("How many PM Minutes have you used?: ");
           pmMinutes = input.nextInt();
           if (pmMinutes > 200) {
-            //Charge $0.05 per minute for any amount of PM Minutes past 200 Minutes
-            pmCost = pmMinutes * pmAddedCost;
+            //Find the difference
+            pmMinutesDifference = pmMinutes - 200;
+            //Find Cost of Difference
+            pmMinutesDifferenceCost = pmMinutesDifference + pmAddedCost;
+            //Add pmMinutesDifference to pmCost to get pmFinalCost
+            pmFinalCost = pmCost + pmMinutesDifferenceCost;
           }
-          premiumFinalCost = premiumCost + amCost + pmCost;
-          System.out.printf("$%5.2f\n", premiumFinalCost);
+          else {
+            //pmFinalCost wihtout minute difference
+            pmFinalCost = pmCost;
+          }
+          
+          premiumFinalCost = premiumCost + amFinalCost + pmFinalCost; //Calculate premiumFinalCost
+          
+          //Receipt formatting
+          System.out.printf("\n\nTELEPHONE BILL FOR %s         ACCOUNT NBR: %d    "
+                  + "     TYPE OF SERVICE: %c\n", lastName, accountNumber, serviceCode);
+          System.out.printf("Number of AM Minutes used: %d    Cost per minute: $%"
+                  + ".2f    Charges: $%.2f + $%.2f\n",amMinutes,amAddedCost,premiumCost,amMinutesDifferenceCost);
+          System.out.printf("Number of PM Minutes used: %d    Cost per minute: $%"
+                  + ".2f    Charges: $%.2f + $%.2f\n",pmMinutes,pmAddedCost,premiumCost,pmMinutesDifferenceCost);
+          System.out.println("                                                "
+                  + "                      ______________\n");
+          System.out.printf("                                                 "
+                  + " Total Charges:              $%.2f\n", premiumFinalCost);        
         }
     } 
 }
