@@ -1,6 +1,5 @@
 /*
 Rylan Martin - 3.3.2020 - CH4 Required Program
-
 This program acts as a football scoreboard for the Fall Season. A banner will 
 display with a description of the program with a prompt to enter both team
 names following that. A for loop will go through each quarter and will ask for 
@@ -47,7 +46,7 @@ public class CH4RequiredProgramRylanMartin {
         //Description of the program
         System.out.println("This program acts as a football scoreboard for the Fall Season. This program will prompt "
                          + "the user to enter both team\n" +
-                           "names following that. A for loop will go through each quarter and will ask for \n" +
+                           "names. A for loop will go through each quarter and will ask for \n" +
                            "total touchdowns and total field goals. The score will be calculated once it is \n" +
                            "complete. If there is a tie at the end of the 4 quarters, then a do..while loop\n" +
                            "will run for overtime.");
@@ -120,12 +119,12 @@ public class CH4RequiredProgramRylanMartin {
         if (team1Score > team2Score) {
             //Print the final scores and print the winning team name (Team 1)
             System.out.printf("%nFinal Score:%n%s: %d - %s: %d", team1Name, team1Score, team2Name, team2Score);
-            System.out.printf("%n%s wins the game!", team1Name);
+            System.out.printf("%n%s wins the game! Congratulations!", team1Name);
         }
         else {
             //Print the final score and print the winning team name (Team 2)
             System.out.printf("%nFinal score:%n%s: %d - %s: %d", team2Name, team2Score, team1Name, team1Score);
-            System.out.printf("%n%s wins the game!", team2Name);
+            System.out.printf("%n%s wins the game! Congratulations!", team2Name);
         }
     }  
 }
