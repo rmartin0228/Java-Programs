@@ -1,0 +1,99 @@
+/*
+
+*/
+package jukebox.rylan.martin;
+import java.io.*;
+import java.util.*;
+/**
+ * @author rmartin427
+ */
+public class JukeBoxRylanMartin {
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        //Welcome User to the Jukebox, display the songs, and let the user choose
+
+        //Scanner to take user input
+        Scanner input = new Scanner(System.in);
+
+        //Working Variables
+        int lineNumber = 1; //Starting line number for CafeSongs
+        String line; //Print song line
+        int quarters = 0; //Quarters for the jukebox
+        int yn2 = 0; //Variable set to enter more quarters
+        int yn = 0; //Variable to ask if you want to listen to the jukebox
+
+        //Create new file
+        File music = new File("CafeSongs.txt"); //Create file for CafeSongs.txt
+        Scanner songs = new Scanner(music);
+        Scanner scnr = new Scanner(music);
+        File out = new File("jukeboxOutput.txt"); //Create file for output of for loop
+        
+        System.out.println("Welcome to the Jukebox! Here is a list of all of our songs: ");
+        System.out.println();
+        
+        try ( //Create new FileWriter
+                FileWriter fw = new FileWriter(out) //Create FileWriter
+        ) {
+            do { //Print entirety of CafeSongs.txt
+                line = scnr.nextLine();
+                System.out.println(lineNumber + " : " + line);
+                lineNumber++;
+            } while(scnr.hasNextLine());
+            
+            System.out.println();
+            System.out.print("Would you like to liten? (1 for yes, 0 for no): ");
+            yn = input.nextInt();
+            while (yn != 0 && yn != 1) {
+                System.out.print("Please enter a valid number.");
+                yn = input.nextInt();
+            }
+            if (yn == 1) {
+                System.out.print("How many quarters would you like to enter? (3 minutes for every $0.25): ");
+                quarters = input.nextInt();
+                
+                double jukeboxMoney = quarters * .25; //Total amount of money for the jukebox
+                
+                for (int i = quarters; i >= 0; i--) {
+                if (i == 0) {
+                    System.out.print("You ran out of quarters! Would you like to add more? (1 for yes, 0 for no): ");
+                    yn2 = input.nextInt();
+                    while (yn2 != 1 && yn2 != 0) {
+                        System.out.print("Please enter a valid number.: ");
+                        yn2 = input.nextInt();
+                    }
+                    if (yn2 == 1) {
+                        System.out.print("How many quarters would you like to add?: ");
+                        i = input.nextInt();
+                        jukeboxMoney = i * .25;
+                    }
+                    else {
+                        System.out.print("Thank you for stopping by!");
+                        if (yn2 == 0) {
+                            break;
+                        }
+                    }
+                }
+                    //Start playing playlist based on amount of quarters entered
+                    System.out.println();
+                    System.out.printf("You have %d quarters / $%.2f dollars left", i, jukeboxMoney);
+                    String currentSong = songs.nextLine();
+                    System.out.println("\nNow Playing: " + currentSong);
+                
+                    try { //Output songs that are played to a separate file
+                        String data = currentSong;
+                        fw.write(data);
+                        fw.write("\n");
+                    } 
+                    catch (Exception e) { //If a line couldn't append, print this line
+                        System.out.print("Couldn't append to file.");
+                    }
+                    jukeboxMoney -= .25; //Count down total money left
+                }
+            }
+            else {
+                System.out.println("\nThank you for stopping by!");
+            }
+
+        }
+    }
+}
